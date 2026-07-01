@@ -171,6 +171,75 @@
             .gamer-destacado { grid-column: span 1; }
         }
     </style>
+
+    <!-- Estilos Dev 3 - Sección Guías -->
+    <style>
+        #guias .titulo-seccion { color: var(--acento-guias); }
+        #guias .dev-badge { color: var(--acento-guias); }
+
+        .grid-guias {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .tarjeta-guia {
+            background-color: var(--bg-tarjeta);
+            border-radius: 8px;
+            border-top: 3px solid var(--acento-guias);
+            padding: 25px 20px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .tarjeta-guia:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.15);
+        }
+
+        .icono-guia {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: rgba(0, 255, 102, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 22px;
+        }
+
+        .tarjeta-guia h3 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .tarjeta-guia p {
+            color: var(--texto-mutado);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-ver-guia {
+            display: inline-block;
+            padding: 8px 20px;
+            border: 1px solid var(--acento-guias);
+            color: var(--acento-guias);
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .btn-ver-guia:hover {
+            background: var(--acento-guias);
+            color: var(--bg-principal);
+        }
+    </style>
+    <!-- Fin estilos Dev 3 -->
     
     <?php wp_head(); ?>
 </head>
@@ -227,6 +296,56 @@
                     <h3>🧠 Modelos de IA locales para asistencia en desarrollo</h3>
                     <p>Cómo implementar herramientas de lenguaje estructurado en tu propio entorno sin depender de la nube para potenciar la generación de código.</p>
                 </article>
+            </div>
+        </section>
+
+        <!-- Sección Dev 3: Guías y Herramientas -->
+        <section class="seccion-revista" id="guias">
+            <h2 class="titulo-seccion">
+                Guías y Herramientas
+                <span class="dev-badge">Dev 3</span>
+            </h2>
+            <div class="grid-guias">
+                <?php
+                $guias_query = new WP_Query([
+                    'category_name'  => 'guias',
+                    'posts_per_page' => 3
+                ]);
+
+                if ($guias_query->have_posts()) :
+                    while ($guias_query->have_posts()) : $guias_query->the_post();
+                ?>
+                    <article class="tarjeta-guia">
+                        <div class="icono-guia">🎮</div>
+                        <h3><?php the_title(); ?></h3>
+                        <p><?php echo wp_trim_words(get_the_excerpt(), 18); ?></p>
+                        <a href="<?php the_permalink(); ?>" class="btn-ver-guia">Ver Guía</a>
+                    </article>
+                <?php
+                    endwhile;
+                    wp_reset_postdata();
+                else :
+                ?>
+            
+                    <article class="tarjeta-guia">
+                        <div class="icono-guia">🐧</div>
+                        <h3>Servidores en Linux</h3>
+                        <p>Configuración paso a paso para desplegar servicios de red y servidores privados en distribuciones basadas en Debian o Arch.</p>
+                        <a href="#" class="btn-ver-guia">Ver Guía</a>
+                    </article>
+                    <article class="tarjeta-guia">
+                        <div class="icono-guia">📝</div>
+                        <h3>Bases de Conocimiento</h3>
+                        <p>Aprende a sincronizar tus notas de formato Markdown utilizando repositorios locales y enlaces directos.</p>
+                        <a href="#" class="btn-ver-guia">Ver Guía</a>
+                    </article>
+                    <article class="tarjeta-guia">
+                        <div class="icono-guia">⚙️</div>
+                        <h3>Control de Versiones</h3>
+                        <p>Resolución de conflictos en Git para equipos pequeños que trabajan en repositorios unificados.</p>
+                        <a href="#" class="btn-ver-guia">Ver Guía</a>
+                    </article>
+                <?php endif; ?>
             </div>
         </section>
 
